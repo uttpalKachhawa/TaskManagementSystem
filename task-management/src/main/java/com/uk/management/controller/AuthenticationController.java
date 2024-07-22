@@ -22,12 +22,6 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authenticationRequest) throws Exception {
-        final String jwt = jwtService.createJwtToken(authenticationRequest);
-        return ResponseEntity.ok(new AuthResponse(jwt));
-    }
-
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
@@ -36,4 +30,12 @@ public class AuthenticationController {
         userService.save(user);
         return ResponseEntity.ok("User registered successfully.");
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequest authenticationRequest) throws Exception {
+        final String jwt = jwtService.createJwtToken(authenticationRequest);
+        return ResponseEntity.ok(new AuthResponse(jwt));
+    }
+
+
 }
